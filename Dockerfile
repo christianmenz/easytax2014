@@ -1,4 +1,13 @@
+# Description: Creates a continer running EasyTax2014AG 
+#
+# Usage: 
+# docker run -it --rm  -v /tmp/.X11-unix:/tmp/.X11-unix -v /home/<yourusername>/EasyTax2014/:/root/TaxData -e DISPLAY=unix$DISPLAY christianmenz/easytax2014ag
+#
+# Note: the important thing for you to change is the location where you will actually want to store your data.
+# When using the application please make sure you save the data in the mounted directory (/root/TaxData). If you miss that point you could end up having lost all your changes.
+
 FROM ubuntu:14.04
+MAINTAINER Christian Menz <christianmenz@gmail.com>
 
 RUN apt-get update
 RUN apt-get -y install python-software-properties
@@ -24,6 +33,8 @@ RUN mkdir /EasyTax
 WORKDIR /EasyTax
 RUN wget http://www.hwis.ch/Downloads/EasyTax2014AG_unix_1_1.tar.gz
 RUN tar -zxvf EasyTax2014AG_unix_1_1.tar.gz
+
+RUN mkdir /root/TaxData
 
 # Run the app
 CMD ./EasyTax2014AG/EasyTax2014_AG
